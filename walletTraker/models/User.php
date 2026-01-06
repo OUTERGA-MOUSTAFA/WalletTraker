@@ -1,5 +1,8 @@
 <?php
-include_once 'database.php';
+
+namespace App\Models;
+require_once __DIR__ ."vendor/autoload.php";
+
 class User{
     // attrubits user
     private $CIN;
@@ -10,7 +13,7 @@ class User{
     private $db;
     // construct user
     public function __construct($db, $cin, $name, $email, $password) {
-        $this->db = Database::getInstance();
+        $this->db = AppModel\Database::getInstance();
         $this->CIN = $cin;
         $this->name = $name;
         $this->email = $email;
@@ -23,7 +26,7 @@ class User{
     function getName(){return $this->name;}
     function getEmail(){return $this->email;}
     function getPassword(){return $this->password;}
-    
+
     // funtion to create user
     function AddUser($user){
         $requet = 'INSERT INTO users(CIN, name, email, password) VALUES VALUES (?, ?, ?, ?)';
@@ -34,11 +37,4 @@ class User{
             $this->password
         ]);
     }
-    // function to check email on database
-    function checkEmail($email){
-        $requet = 'SELECT email FROM users WHERE email = ?';
-        $stm = $this->db->query($requet, [$email]);
-        return $stm->fetch();
-    }
-
 }

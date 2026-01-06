@@ -1,5 +1,9 @@
 <?php
-include_once '../../config/database.php';
+
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/databaseSession.php';
+
+//include_once '../../config/database.php';
 class database{
     private static $instance = null;
     private $connection;

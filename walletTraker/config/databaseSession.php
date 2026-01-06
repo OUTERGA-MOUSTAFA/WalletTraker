@@ -2,13 +2,17 @@
 /**
  * Configuration de la base de données
  */
+// namespace App\Config;
+// require_once __DIR__ . '/../config/databaseSession.php';
+
+// use App\config\databaseSession;
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'quiz_platform');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
-
+// Session security
 // Configuration des sessions sécurisées
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
