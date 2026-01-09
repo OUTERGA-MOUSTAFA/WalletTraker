@@ -1,6 +1,6 @@
 #CREATE DATABASE IF NOT EXISTS WalletTrake;
 USE WalletTrake;
-/*
+
 CREATE TABLE IF NOT EXISTS users(
 CIN VARCHAR(50) NOT NULL PRIMARY KEY,
 name VARCHAR(30) NOT NULL,
@@ -17,7 +17,7 @@ date_create DATETIME DEFAULT CURRENT_TIMESTAMP,
 budget DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 CONSTRAINT fk_cin_user FOREIGN KEY (cin_user) REFERENCES users(CIN)
 );
-
+*/
 CREATE TABLE IF NOT EXISTS categorie(
 id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name varchar(100) NOT NULL UNIQUE
@@ -61,7 +61,7 @@ id_walletTraker INT(10) NOT NULL,
 CONSTRAINT fk_cinusers FOREIGN KEY (users_cin) REFERENCES users(CIN),
 CONSTRAINT fk_wallets FOREIGN KEY (id_walletTraker) REFERENCES Wallet(id),
 CONSTRAINT fk_id_depenses FOREIGN KEY (id_depenses) REFERENCES depense(id)
-);*/
+);
 SELECT * FROM users;
 SELECT * FROM wallet;
 SELECT * FROM depense;
