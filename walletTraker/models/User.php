@@ -49,14 +49,4 @@ class User{
             return false;
         }
     }
-
-    function wallet(){
-        
-        try{
-            $requet = "INSERT INTO wallet (cin_user, budget) VALUES (?, ?)";
-            $this->db->query($requet, [$this->getCin() , 0]);
-        }catch(Exception $e){
-            return false;
-        }
-    }
 }
