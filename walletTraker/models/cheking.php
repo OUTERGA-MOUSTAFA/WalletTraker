@@ -1,20 +1,24 @@
 <?php
 namespace App\models;
 use App\models\database;
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config/databaseSession.php';
 
 //include_once 'database.php';
-
-class checking{
+class cheking{
     private $db;
-    public function __construct($db) {
-        $this->db = $db;
+
+    public function __construct() {
+        $this->db = database::getInstance();
     }
+
     // function to check email on database
     function checkEmail($email){
         $requet = 'SELECT email FROM users WHERE email = ?';
         $stm = $this->db->query($requet, [$email]);
-        return $stm->rowCount() > 0;
+        return $stm->fetch();
+    }
+    function checkPassword($email){
+        $requet = 'SELECT password_hash FROM users WHERE email = ?';
+        $stm = $this->db->query($requet, [$email]);
+        return $stm->fetch();
     }
 }

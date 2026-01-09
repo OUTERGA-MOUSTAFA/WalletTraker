@@ -118,11 +118,21 @@
                 <div class="text-center mt-4">
                     <p class="text-gray-600 text-sm">
                         Already have an account? 
-                        <a href="login.php" class="text-blue-600 hover:underline font-medium">Sign In</a>
+                        <a href="/login" class="text-blue-600 hover:underline font-medium">Sign In</a>
                     </p>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", function () {
+            const btn = document.getElementById("submitBtn");
+            const text = document.getElementById("btnText");
+
+            btn.disabled = true;
+            btn.classList.add("opacity-50", "cursor-not-allowed");
+            text.innerText = "Processing...";
+        });
+    </script>
 </body>
 </html>

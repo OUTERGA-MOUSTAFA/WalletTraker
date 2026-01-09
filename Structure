@@ -1,0 +1,18 @@
+www/
+ └── walletTracker/
+     ├── controleur/
+     │    └── Auth.php
+     ├── models/
+     │    ├── cheking.php
+     │    ├── database.php
+     │    └── User.php
+     ├── view/
+           ├── auth/
+           ├── login.php
+           ├── logout.php
+           └── register.php
+        └── wallet_dashboard.php
+     
+    ├── vendor/autoload.php
+    ├── composer.json
+    └── index.php

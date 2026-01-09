@@ -2,13 +2,13 @@
 /**
  * Configuration de la base de données
  */
-// namespace App\Config;
+namespace App\Config;
 // require_once __DIR__ . '/../config/databaseSession.php';
 
 // use App\config\databaseSession;
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'quiz_platform');
+define('DB_NAME', 'walletTrake');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');

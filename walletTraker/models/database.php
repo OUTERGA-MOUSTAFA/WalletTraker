@@ -1,8 +1,9 @@
 <?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config/databaseSession.php';
-
+namespace App\models;
+use App\config\databaseSession;
+// global class f php
+use PDO;
+use PDOException;
 //include_once '../../config/database.php';
 class database{
     private static $instance = null;
@@ -59,6 +60,7 @@ class database{
     public function query($sql, $params = []) {
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($params);
+        
         return $stmt;
     }
 }

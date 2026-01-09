@@ -1,9 +1,69 @@
-CREATE DATABASE IF NOT EXISTS WalletTrake;
+#CREATE DATABASE IF NOT EXISTS WalletTrake;
 USE WalletTrake;
+/*
 CREATE TABLE IF NOT EXISTS users(
 CIN VARCHAR(50) NOT NULL PRIMARY KEY,
-name VARCHAR(30) NOT NULL ,
+name VARCHAR(30) NOT NULL,
 email VARCHAR(100) NOT NULL UNIQUE,
 password_hash VARCHAR(255) NOT NULL,
-register_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+register_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE IF NOT EXISTS wallet(
+id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+cin_user VARCHAR(50) NOT NULL,
+date_create DATETIME DEFAULT CURRENT_TIMESTAMP,
+budget DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+CONSTRAINT fk_cin_user FOREIGN KEY (cin_user) REFERENCES users(CIN)
+);
+
+CREATE TABLE IF NOT EXISTS categorie(
+id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+name varchar(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS depense(
+id INT(10) NOT NULL PRIMARY KEY,
+user_cin VARCHAR(50) NOT NULL,
+id_wallet INT(10) NOT NULL,
+id_categorie INT(10) NOT NULL,
+date_depense DATETIME DEFAULT CURRENT_TIMESTAMP,
+is_active tinyint(1) DEFAULT '1',
+titre VARCHAR(100) NOT NULL,
+montant DECIMAL(10,2) NOT NULL CHECK (montant > 0),
+date_deposit DATETIME DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT fk_CIN FOREIGN KEY (user_cin) REFERENCES users(CIN),
+CONSTRAINT fk_id_wallet FOREIGN KEY (id_wallet) REFERENCES Wallet(id),
+CONSTRAINT fk_id_categorie FOREIGN KEY (id_categorie) REFERENCES categorie(id),
+INDEX idx_user_date (user_cin, date_depense) 
+);
+
+CREATE TABLE IF NOT EXISTS transactions(
+id INT(10) NOT NULL AUTO_INCREMENT UNIQUE,
+date_transaction DATETIME DEFAULT CURRENT_TIMESTAMP,
+cin_users VARCHAR(50) NOT NULL,
+id_depense INT(10) NOT NULL,
+id_wallets INT(10) NOT NULL,
+
+CONSTRAINT fk_cinUser FOREIGN KEY (cin_users) REFERENCES users(CIN),
+CONSTRAINT fk_wallet FOREIGN KEY (id_wallets) REFERENCES Wallet(id),
+CONSTRAINT fk_id_depense FOREIGN KEY (id_depense) REFERENCES depense(id)
+);
+
+CREATE TABLE IF NOT EXISTS auto_depense(
+id INT(10) NOT NULL AUTO_INCREMENT UNIQUE,
+jour DATETIME DEFAULT CURRENT_TIMESTAMP,
+users_cin VARCHAR(50) NOT NULL,
+id_depenses INT(10) NOT NULL,
+id_walletTraker INT(10) NOT NULL,
+
+CONSTRAINT fk_cinusers FOREIGN KEY (users_cin) REFERENCES users(CIN),
+CONSTRAINT fk_wallets FOREIGN KEY (id_walletTraker) REFERENCES Wallet(id),
+CONSTRAINT fk_id_depenses FOREIGN KEY (id_depenses) REFERENCES depense(id)
+);*/
+SELECT * FROM users;
+SELECT * FROM wallet;
+SELECT * FROM depense;
+SELECT * FROM categorie;
+SELECT * FROM auto_depense;
