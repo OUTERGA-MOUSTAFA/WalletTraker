@@ -1,3 +1,11 @@
+<?php
+
+if($walletinfos['email'] !== $_SESSION['email']){
+    require_once __DIR__ .'auth/login.php';
+}
+$userName = $walletinfos['name'];
+$initials = strtoupper(substr($userName, 0, 1) . substr(explode(' ', $userName)[1] ?? '', 0, 1));
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -90,6 +98,10 @@
     </style>
 </head>
 <body class="text-gray-800">
+
+<pre>
+<?php print_r($walletinfos) ?>
+</pre>
     <!-- Navigation Bar -->
     <nav class="glass-card fixed top-0 left-0 right-0 z-50 px-6 py-4 mx-4 mt-4 rounded-2xl">
         <div class="flex items-center justify-between">
@@ -131,12 +143,12 @@
                     <div class="flex items-center space-x-3 cursor-pointer">
                         <div class="relative">
                             <div class="w-10 h-10 gradient-primary rounded-full flex items-center justify-center text-white font-bold">
-                                KA
+                                <?= $initials ?? '0'?>
                             </div>
                             <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                         </div>
                         <div class="hidden md:block">
-                            <p class="font-semibold">Karim Ahmed</p>
+                            <p class="font-semibold"><?= htmlspecialchars($walletinfos['name']?? 'Error name') ?></p>
                             <p class="text-sm text-gray-500">Premium Member</p>
                         </div>
                         <i class="fas fa-chevron-down text-gray-400"></i>
@@ -147,11 +159,11 @@
                         <div class="p-4 border-b border-gray-100">
                             <div class="flex items-center space-x-3">
                                 <div class="w-12 h-12 gradient-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                    KA
+                                    <?= $initials ?>
                                 </div>
                                 <div>
-                                    <p class="font-bold">Karim Ahmed</p>
-                                    <p class="text-sm text-gray-500">karim@example.com</p>
+                                    <p class="font-bold"><?= htmlspecialchars($walletinfos['name']?? 'Error name') ?></p>
+                                    <p class="text-sm text-gray-500"><?= htmlspecialchars($walletinfos['email']?? 'Error Email') ?></p>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +182,7 @@
                             </a>
                         </div>
                         <div class="p-4 border-t border-gray-100">
-                            <a href="#" class="flex items-center justify-center px-4 py-2 gradient-primary text-white font-medium rounded-lg hover:opacity-90">
+                            <a href="/logout" class="flex items-center justify-center px-4 py-2 gradient-primary text-white font-medium rounded-lg hover:opacity-90">
                                 <i class="fas fa-sign-out-alt mr-2"></i>
                                 Déconnexion
                             </a>
@@ -183,10 +195,10 @@
 
     <!-- Main Content -->
     <main class="pt-24 px-4 md:px-8 pb-8">
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mt-8 mx-auto">
             <!-- Header avec salutation -->
             <div class="mb-8">
-                <h2 class="dashboard-title text-3xl font-bold mb-2">Bonjour, Karim 👋</h2>
+                <h2 class="dashboard-title text-3xl font-bold mb-2">Bonjour, <?= htmlspecialchars(strtoupper($walletinfos['name']?? 'Error name')) ?> 👋</h2>
                 <p class="text-gray-600">Voici votre résumé financier du mois</p>
             </div>
             
@@ -197,7 +209,7 @@
                     <div class="flex justify-between items-start mb-4">
                         <div>
                             <p class="text-gray-500 text-sm">Budget du mois</p>
-                            <h3 class="text-2xl font-bold mt-2">5,000 DH</h3>
+                            <h3 class="text-2xl font-bold mt-2"><?= htmlspecialchars($walletinfos['budget']?? 'Error 0') ?> DH</h3>
                         </div>
                         <div class="gradient-primary p-3 rounded-xl">
                             <i class="fas fa-coins text-white text-xl"></i>
@@ -266,7 +278,14 @@
                     <p class="text-sm text-gray-500 mt-2">65% atteint</p>
                 </div>
             </div>
-            
+            <div class="grid grid-cols-2 gap-3">
+                <button class="flex items-center justify-center p-3 bg-purple-50 text-purple-600 font-medium rounded-xl hover:bg-purple-100">
+                    <i class="fas fa-plus mr-2"></i> Ajouter dépense
+                </button>
+                <button class="flex items-center justify-center p-3 bg-purple-50 text-purple-600 font-medium rounded-xl hover:bg-purple-100">
+                    <i class="fas fa-plus mr-2"></i> Ajouter catégorie
+                </button>
+             </div>
             <!-- Graphique et Détails -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                 <!-- Graphique principal -->
@@ -588,7 +607,7 @@
                 labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
                 datasets: [{
                     label: 'Dépenses (DH)',
-                    data: [2800, 2950, 3100, 3250, 3400, 3550, 3700, 3850, 4000, 4150, 4300, 4450],
+                    
                     borderColor: 'rgba(102, 126, 234, 1)',
                     backgroundColor: 'rgba(102, 126, 234, 0.1)',
                     borderWidth: 3,
@@ -599,7 +618,7 @@
                     pointHoverRadius: 8
                 }, {
                     label: 'Budget (DH)',
-                    data: [3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000],
+                    
                     borderColor: 'rgba(118, 75, 162, 0.5)',
                     borderWidth: 2,
                     borderDash: [5, 5],

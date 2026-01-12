@@ -1,4 +1,7 @@
 <?php
+
+
+
 // routing
 
 define('BASE_PATH', '/walletTracker');
@@ -8,7 +11,7 @@ require_once __DIR__ . '/walletTraker/config/databaseSession.php';
 //                    ||
 
 use App\controleur\Auth;
-use App\controleur\Dashboard;
+use App\controleur\Dashbord;
 // requiperé la valeur de request
 // $uri = /register or /login or /dashboard
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -30,7 +33,6 @@ if ($uri === '/' || $uri === '') {
     }
 }
 
-
 // if ($uri === '/register' && $method === 'POST') {
 //     $auth = new Auth();
 //     $auth->register();
@@ -51,7 +53,13 @@ if ($uri === '/register' && $method === 'GET') {
 if ($uri === '/login' && $method === 'GET') {
     (new Auth())->showlogin();
 }
-if ($uri === '/dashboard' && $method === 'POST') {
-    var_dump($_POST);
-    (new dashboard())->showDashboard();
+
+// logout
+if ($uri === '/logout' && $method === 'GET') {
+    (new Auth())->logout();
+}
+
+
+if ($uri === '/dashboard' && $method === 'GET') {
+    (new Dashbord())->showDashboard();
 }

@@ -57,10 +57,9 @@ class database{
      * @ param array $params
      * @ return PDOStatement
      */
-    public function query($sql, $params = []) {
+    function query($sql, $params = []) {
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($params);
-        
         return $stmt;
     }
 }

@@ -46,17 +46,20 @@ class Auth {
             $this->showLogin($errors);
             exit();
         }elseif(empty($errors)) {
+            $getCin = new cheking();
+            $CIN= $getCin->getCIN($email);
+
+            $_SESSION['cin'] = $CIN['CIN'];
             $_SESSION['login'] = 'ok';
+            $_SESSION['email'] = $email;
+
             echo "<script>alert('Connexion réussie')'</script>";
-            require_once __DIR__ . '/../view/wallet_dashboard.php';
+            header('Location: ' . BASE_PATH . '/dashboard');
             exit();
         }else{
-        header('location: /login');
+        header('location:'. BASE_PATH . '/login');
         exit();
         }
-
-
-
     }
 
 
@@ -99,10 +102,19 @@ class Auth {
         }
         // Vérifier le doublement email en DB
         
-        $checkEmail = new cheking();
-        if ($checkEmail->checkEmail($email)) {
+        $checkInfo = new cheking();
+        $checkExist = $checkInfo->checkEmail($email);
+        var_dump($checkExist);
+        
+        if($checkExist != false){
+            if ($checkExist['email'] === $email) {
             $errors[] = "Email déjà utilisé";
+            }
+            if($checkExist['CIN'] === $cin){
+                $errors[] = "CIN déjà utilisé";
+            }
         }
+        
         // Si aucune erreur → insertion
         if (!empty($errors)) {
             // function li dakhel class khem biha 
@@ -117,14 +129,25 @@ class Auth {
             $result = $userClass->AddUser();
             if($result === true){
                 $_SESSION['name'] = $name;
-                $_SESSION['email'] = $email;
-                showLogin($array[]);
+                $_SESSION['cin'] = $cin;
+                $array = [];
+                $this->showLogin($array);
             }
             echo "<script>alert('Inscription réussie') window.location.href = '/login';</script>";
             exit();
         }else{
-        header('location: /register');
+        header('Location: ' . BASE_PATH . '/register');
         exit();
         }
+    }
+
+    function logout() {
+        // Destroy the session
+        session_unset();
+        session_destroy();
+
+        // Redirect to login page
+        header('Location: ' . BASE_PATH . '/register');
+        exit();
     }
 }

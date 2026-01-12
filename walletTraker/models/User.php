@@ -3,6 +3,7 @@
 namespace App\models;
 use App\config\databaseSession;
 use App\models\database;
+use App\models\dashboard;
 
 // require ola include only on index.php
 // require_once 'database.php'; 
@@ -36,14 +37,16 @@ class User{
             
             $requet = "INSERT INTO users (cin, name, email, password_hash)
             VALUES (?, ?, ?, ?)";
-            var_dump($this->getEmail());
+            //var_dump($this->getEmail());
             $this->db->query($requet, [
                 $this->getCin(),
                 $this->getName(),
                 $this->getEmail(),
                 $this->getPassword()
             ]);
-            $this->wallet();
+            //$session = new databaseSession();
+            $wallet = new dashboard($this->getCin(), 0);
+            $wallet->wallet();
             return true;
         } catch (Exception $e) {
             return false;
